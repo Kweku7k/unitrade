@@ -29,7 +29,7 @@ applicaction = Flask(__name__)
 
 # applicaction.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:admin@35.222.128.215:5432/talanku'
 # sandboxDb = "postgresql://postgres:adumatta@database-1.crebgu8kjb7o.eu-north-1.rds.amazonaws.com:5432/talanku"
-sandboxDb = os.environ.get("TALANKU_DATABASE_URL")
+sandboxDb = os.environ.get("TALANKU_DB_URL")
 applicaction.config['SQLALCHEMY_DATABASE_URI']=sandboxDb
 
 
