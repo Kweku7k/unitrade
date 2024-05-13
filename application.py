@@ -28,7 +28,8 @@ applicaction = Flask(__name__)
 # working db ⬆️
 
 # applicaction.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:admin@35.222.128.215:5432/talanku'
-sandboxDb = "postgresql://postgres:adumatta@database-1.crebgu8kjb7o.eu-north-1.rds.amazonaws.com:5432/talanku"
+# sandboxDb = "postgresql://postgres:adumatta@database-1.crebgu8kjb7o.eu-north-1.rds.amazonaws.com:5432/talanku"
+sandboxDb = os.environ.get("TALANKU_DATABASE_URL")
 applicaction.config['SQLALCHEMY_DATABASE_URI']=sandboxDb
 
 
@@ -366,8 +367,8 @@ def index(itemId):
 def home():
     form = Search()
     session['cart'] = []
-    items = Item.query.order_by(Item.id.desc()).limit(20).all()
-    # items = Item.query.all().order_by()
+    # items = Item.query.order_by(Item.id.desc()).limit(20).all()
+    items = Item.query.all()
     home = 'home'
     shoppingCart = session['cart']
     print(type(shoppingCart))
@@ -576,7 +577,7 @@ def register():
             flash (f'Account for ' + form.username.data + ' has been created.', 'success') 
             user = User.query.filter_by(phone = form.phone.data).first()
             login_user(user, remember=True)
-            return redirect (url_for('index'))
+            return redirect (url_for('home'))
     else:
         print(form.errors)
         flash (f'There was a problem', 'danger')
